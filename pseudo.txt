@@ -9,3 +9,7 @@ wordGenerator() // genererar ett nytt ord från vald kategori och gör ordet som
 letterCheck() // Kontrollerar om bokstaven finns i ordet för att sedan skriva ut det på vår HTML
 
 //
+
+Reda - Poängsystem, tidtagning
+Anton - Style med CSS
+Pontus & Anton - kolla på multiplayer
