@@ -12,6 +12,7 @@
         <h1>Hang man</h1>
         <h2 id="timer"></h2>
       </header>
+
       <svg
         width="501"
         height="565"
@@ -61,33 +62,39 @@
           fill="black"
         />
       </svg>
-      <textarea
-        name="secretword"
-        id="secretword"
-        cols="1"
-        rows="1"
-        readonly
-      ></textarea>
-      <input type="text" maxlength="1" id="letterinput" /><label
-        for="letterinput"
-      ></label>
-      <button class="btn btn-play">Play</button>
-      <button class="btn btn-category">Categories</button>
-      <textarea
-        name="wrongletters"
-        id="wrongletters"
-        cols="30"
-        rows="1"
-        readonly
-      ></textarea>
-      <article class="category-container hidden">
+      <article class="game-area">
+        <textarea
+          name="secretword"
+          id="secretword"
+          cols="1"
+          rows="1"
+          readonly
+        ></textarea>
+        <input type="text" maxlength="1" id="letterinput" /><label
+          for="letterinput"
+        ></label>
+        <button class="btn btn-play">Play</button>
+        <button class="btn btn-category">Categories</button>
+        <textarea
+          name="wrongletters"
+          id="wrongletters"
+          cols="30"
+          rows="1"
+          readonly
+        ></textarea>
+      </article>
+      <article class="category container hidden">
+        <button class="btn-close" id="close">X</button>
         <button class="btn" id="animals">Animals</button
         ><button class="btn" id="cities">Cities</button
         ><button class="btn" id="celebrities">Celebrities</button>
+        <button class="btn" id="mix">All categories</button>
       </article>
-      <article class="status hidden">
-        <h1></h1>
-        <button class="btn btn-reset">Play again</button>
+      <article class="status container hidden">
+        <div class="status-border">
+          <h1></h1>
+          <button class="btn btn-reset">Play again</button>
+        </div>
       </article>
     </section>
 

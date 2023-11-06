@@ -4,18 +4,21 @@ const svgField = document.querySelector('svg'),
   svgFigure = Array.from(svgField.children);
 
 const btnPlay = document.querySelector('.btn-play'),
-  statusBox = document.querySelector('.status'),
+  btnCategory = document.querySelector('.btn-category'),
   btnReset = document.querySelector('.btn-reset'),
+  statusBox = document.querySelector('.status'),
   wordBox = document.querySelector('#secretword'),
   letterBox = document.querySelector('#wrongletters'),
   guessLetter = document.querySelector('#letterinput'),
-  timer = document.querySelector('#timer');
+  timer = document.querySelector('#timer'),
+  categoryCont = document.querySelector('.category');
 
 let tryCounter = 0,
   newWord,
   secretWord,
   guessedLetters = [],
   wrongLetters = [],
+  score = 0,
   points = 0,
   chosenCategory = mix,
   gameTimer,
@@ -39,17 +42,39 @@ guessLetter.addEventListener('keyup', (keyPress) => {
 
 //EventListener för att starta spelet
 btnPlay.addEventListener('click', () => {
-  btnPlay.textContent = btnPlay.textContent === 'Play' ? 'Reset' : 'Play';
-
+  gameReset();
+  btnPlay.textContent = 'Reset';
   [newWord, secretWord] = randomWord(chosenCategory);
   startTimer();
 });
 
 //EventListener för att resetta spelet efter att man spelat klart
 btnReset.addEventListener('click', () => {
+  gameReset();
+  startTimer();
   [newWord, secretWord] = randomWord(chosenCategory);
   statusBox.classList.add('hidden');
-  startTimer();
+});
+
+//EventListener för att få välja kategorier
+btnCategory.addEventListener('click', () => {
+  categoryCont.classList.remove('hidden');
+});
+
+categoryCont.querySelectorAll('button').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    if (btn.id === 'cities') {
+      chosenCategory = cities;
+    } else if (btn.id === 'celebrities') {
+      chosenCategory = celebrities;
+    } else if (btn.id === 'animals') {
+      chosenCategory = animals;
+    } else if (btn.id === 'mix') {
+      chosenCategory = mix;
+    }
+    categoryCont.classList.add('hidden');
+    return chosenCategory;
+  });
 });
 
 //Funktion som anropas när rätt format på inputfältet är.
@@ -66,10 +91,16 @@ const showPart = (part) => {
 //Funktion som återställer spelet till grundinställningar
 const gameReset = () => {
   tryCounter = 0;
+  guessedLetters = [];
+  wrongLetters = [];
+  score = 0;
+  points = 0;
 
   svgFigure.forEach((part) => {
     part.classList.add('hidden');
   });
+
+  letterBox.textContent = wrongLetters;
 };
 
 //Funktion som generar ett nytt ord ur array från vald kategori
@@ -92,9 +123,9 @@ const randomWord = (words) => {
 const endGame = (gameStatus) => {
   statusBox.classList.remove('hidden');
   if (gameStatus) {
-    let score = Math.floor(
-      100 - (Date.now() - start) / 10000 - wrongLetters.length * 5
-    );
+    score =
+      Math.floor(100 - (Date.now() - start) / 10000 - wrongLetters.length * 5) +
+      points;
     statusBox.querySelector(
       'h1'
     ).textContent = `You won mothafucka, gained: ${score} points`;
@@ -115,7 +146,6 @@ const testLetter = (letter, word, secret) => {
       positions.push(i);
     }
   }
-
   //Tittar om det fanns några träffar och byter isf ut _ -> rätt bokstav
   if (positions.length) {
     const result = secret.split('');
@@ -153,9 +183,8 @@ const testLetter = (letter, word, secret) => {
 };
 
 gameReset();
-[newWord, secretWord] = randomWord(chosenCategory);
-console.log(newWord);
 
+//Timer för att kunna räkna ut bonuspoäng
 const startTimer = () => {
   stopTimer();
   const start = Date.now();
@@ -176,6 +205,7 @@ const startTimer = () => {
   return gameTimer;
 };
 
+//Funktion för att stoppa timern
 const stopTimer = () => {
   clearInterval(gameTimer);
 };
