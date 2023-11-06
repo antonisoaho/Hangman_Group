@@ -4,6 +4,7 @@ const svgField = document.querySelector('svg'),
   svgFigure = Array.from(svgField.children);
 
 const btnPlay = document.querySelector('.btn-play'),
+  statusBox = document.querySelector('.status'),
   btnReset = document.querySelector('.btn-reset'),
   wordBox = document.querySelector('#secretword'),
   letterBox = document.querySelector('#wrongletters'),
@@ -16,7 +17,8 @@ let tryCounter = 0,
   guessedLetters = [],
   wrongLetters = [],
   points = 0,
-  chosenCategory = mix;
+  chosenCategory = mix,
+  gameTimer;
 
 // EventListener för att titta vad användare har gissat på för bokstav
 guessLetter.addEventListener('keyup', (keyPress) => {
@@ -45,7 +47,7 @@ btnPlay.addEventListener('click', () => {
 //EventListener för att resetta spelet efter att man spelat klart
 btnReset.addEventListener('click', () => {
   [newWord, secretWord] = randomWord(chosenCategory);
-
+  statusBox.classList.add('hidden');
   startTimer();
 });
 
@@ -87,16 +89,17 @@ const randomWord = (words) => {
 
 //Funktion som visar en box som berättar status och frågar om man vill spela igen
 const endGame = (gameStatus) => {
-  const statusBox = document.querySelector('.status');
   statusBox.classList.remove('hidden');
   if (gameStatus) {
     statusBox.querySelector(
       'h1'
     ).textContent = `You won mothafucka, gained: ${points} points`;
+    stopTimer();
   } else {
     statusBox.querySelector(
       'h1'
     ).textContent = `You lose sucka, gained: ${points} points`;
+    stopTimer();
   }
 };
 
@@ -151,9 +154,10 @@ gameReset();
 console.log(newWord);
 
 const startTimer = () => {
+  stopTimer();
   const start = Date.now();
 
-  setInterval(() => {
+  gameTimer = setInterval(() => {
     const seconds = Math.floor((Date.now() - start) / 1000);
     let minutes = Math.floor(seconds / 60);
     if (minutes < 10) {
@@ -166,4 +170,9 @@ const startTimer = () => {
 
     timer.innerHTML = `${minutes} : ${extraSeconds}`;
   }, 1000);
+  return gameTimer;
+};
+
+const stopTimer = () => {
+  clearInterval(gameTimer);
 };
