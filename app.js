@@ -3,7 +3,8 @@ import { celebrities, cities, animals, mix } from './words.js';
 const svgField = document.querySelector('svg'),
   svgFigure = Array.from(svgField.children);
 
-const btnPlay = document.querySelector('btn-play'),
+const btnPlay = document.querySelector('.btn-play'),
+  btnReset = document.querySelector('.btn-reset'),
   wordBox = document.querySelector('#secretword'),
   letterBox = document.querySelector('#wrongletters'),
   guessLetter = document.querySelector('#letterinput');
@@ -31,6 +32,20 @@ guessLetter.addEventListener('keyup', (keyPress) => {
     guessLetter.value = '';
   }
 });
+
+//Funktion för att starta ett nytt spel
+const startGame = () => {
+  btnPlay.textContent = btnPlay.textContent === 'Play' ? 'Reset' : 'Play';
+
+  [newWord, secretWord] = randomWord(chosenCategory);
+  return [newWord, secretWord];
+};
+
+//EventListener för att reagera på startknappen och starta spelet
+btnPlay.addEventListener('click', startGame);
+
+//EventListener för att reagera på resetknappen som kommer upp efter man är färdig
+btnReset.addEventListener('click', startGame);
 
 //Funktion som anropas när rätt format på inputfältet är.
 const newLetter = () => {
@@ -130,5 +145,5 @@ const testLetter = (letter, word, secret) => {
 };
 
 gameReset();
-[newWord, secretWord] = randomWord(chosenCategory);
+
 console.log(newWord);
