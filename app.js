@@ -18,7 +18,8 @@ let tryCounter = 0,
   wrongLetters = [],
   points = 0,
   chosenCategory = mix,
-  gameTimer;
+  gameTimer,
+  start = Date.now();
 
 // EventListener för att titta vad användare har gissat på för bokstav
 guessLetter.addEventListener('keyup', (keyPress) => {
@@ -91,10 +92,12 @@ const randomWord = (words) => {
 const endGame = (gameStatus) => {
   statusBox.classList.remove('hidden');
   if (gameStatus) {
+    let score = Math.floor(
+      100 - (Date.now() - start) / 10000 - wrongLetters.length * 5
+    );
     statusBox.querySelector(
       'h1'
-    ).textContent = `You won mothafucka, gained: ${points} points`;
-    stopTimer();
+    ).textContent = `You won mothafucka, gained: ${score} points`;
   } else {
     statusBox.querySelector(
       'h1'
