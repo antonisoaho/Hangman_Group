@@ -3,7 +3,8 @@ import { celebrities, cities, animals, mix } from './words.js';
 const svgField = document.querySelector('svg'),
   svgFigure = Array.from(svgField.children);
 
-const btnPlay = document.querySelector('btn-play'),
+const btnPlay = document.querySelector('.btn-play'),
+  btnReset = document.querySelector('.btn-reset'),
   wordBox = document.querySelector('#secretword'),
   letterBox = document.querySelector('#wrongletters'),
   guessLetter = document.querySelector('#letterinput'),
@@ -31,6 +32,21 @@ guessLetter.addEventListener('keyup', (keyPress) => {
   } else {
     guessLetter.value = '';
   }
+});
+
+//EventListener för att starta spelet
+btnPlay.addEventListener('click', () => {
+  btnPlay.textContent = btnPlay.textContent === 'Play' ? 'Reset' : 'Play';
+
+  [newWord, secretWord] = randomWord(chosenCategory);
+  startTimer();
+});
+
+//EventListener för att resetta spelet efter att man spelat klart
+btnReset.addEventListener('click', () => {
+  [newWord, secretWord] = randomWord(chosenCategory);
+
+  startTimer();
 });
 
 //Funktion som anropas när rätt format på inputfältet är.
@@ -151,5 +167,3 @@ const startTimer = () => {
     timer.innerHTML = `${minutes} : ${extraSeconds}`;
   }, 1000);
 };
-
-startTimer();
