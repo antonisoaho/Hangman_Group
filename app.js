@@ -1,12 +1,13 @@
-import { celebrities, cities, animals, mix } from './words.js';
+import { celebrities, cities, animals, mix } from "./words.js";
 
-const svgField = document.querySelector('svg'),
+const svgField = document.querySelector("svg"),
   svgFigure = Array.from(svgField.children);
 
-const btnPlay = document.querySelector('btn-play'),
-  wordBox = document.querySelector('#secretword'),
-  letterBox = document.querySelector('#wrongletters'),
-  guessLetter = document.querySelector('#letterinput');
+const btnPlay = document.querySelector("btn-play"),
+  wordBox = document.querySelector("#secretword"),
+  letterBox = document.querySelector("#wrongletters"),
+  guessLetter = document.querySelector("#letterinput"),
+  timer = document.querySelector("#timer");
 
 let tryCounter = 0,
   newWord,
@@ -17,30 +18,30 @@ let tryCounter = 0,
   chosenCategory = mix;
 
 // EventListener för att titta vad användare har gissat på för bokstav
-guessLetter.addEventListener('keyup', (keyPress) => {
+guessLetter.addEventListener("keyup", (keyPress) => {
   if (isNaN(guessLetter.value)) {
     if (!guessedLetters.includes(guessLetter.value.toUpperCase())) {
-      guessLetter.style.color = 'green';
-      if (keyPress.key === 'Enter') {
+      guessLetter.style.color = "green";
+      if (keyPress.key === "Enter") {
         newLetter();
       }
     } else {
-      guessLetter.style.color = 'red';
+      guessLetter.style.color = "red";
     }
   } else {
-    guessLetter.value = '';
+    guessLetter.value = "";
   }
 });
 
 //Funktion som anropas när rätt format på inputfältet är.
 const newLetter = () => {
   testLetter(guessLetter.value.toUpperCase(), newWord, secretWord);
-  guessLetter.value = '';
+  guessLetter.value = "";
 };
 
 //Funktion som visar del av figur
 const showPart = (part) => {
-  svgFigure[part].classList.remove('hidden');
+  svgFigure[part].classList.remove("hidden");
 };
 
 //Funktion som återställer spelet till grundinställningar
@@ -48,7 +49,7 @@ const gameReset = () => {
   tryCounter = 0;
 
   svgFigure.forEach((part) => {
-    part.classList.add('hidden');
+    part.classList.add("hidden");
   });
 };
 
@@ -58,27 +59,27 @@ const randomWord = (words) => {
 
   const secretArray = [];
 
-  for (let word of newWord.split(' ')) {
-    const secret = '_'.repeat(word.length);
+  for (let word of newWord.split(" ")) {
+    const secret = "_".repeat(word.length);
     secretArray.push(secret);
   }
 
-  secretWord = secretArray.join(' ');
+  secretWord = secretArray.join(" ");
   wordBox.textContent = secretWord;
   return [newWord, secretWord];
 };
 
 //Funktion som visar en box som berättar status och frågar om man vill spela igen
 const endGame = (gameStatus) => {
-  const statusBox = document.querySelector('.status');
-  statusBox.classList.remove('hidden');
+  const statusBox = document.querySelector(".status");
+  statusBox.classList.remove("hidden");
   if (gameStatus) {
     statusBox.querySelector(
-      'h1'
+      "h1"
     ).textContent = `You won mothafucka, gained: ${points} points`;
   } else {
     statusBox.querySelector(
-      'h1'
+      "h1"
     ).textContent = `You lose sucka, gained: ${points} points`;
   }
 };
@@ -95,7 +96,7 @@ const testLetter = (letter, word, secret) => {
 
   //Tittar om det fanns några träffar och byter isf ut _ -> rätt bokstav
   if (positions.length) {
-    const result = secret.split('');
+    const result = secret.split("");
     positions.forEach((position) => {
       if (position < result.length) {
         result[position] = letter;
@@ -103,12 +104,12 @@ const testLetter = (letter, word, secret) => {
       }
     });
 
-    const resultString = result.join('');
+    const resultString = result.join("");
     wordBox.textContent = resultString;
     secretWord = resultString;
     guessedLetters.push(letter);
 
-    if (!secretWord.includes('_')) {
+    if (!secretWord.includes("_")) {
       endGame(true);
     }
 
@@ -132,3 +133,23 @@ const testLetter = (letter, word, secret) => {
 gameReset();
 [newWord, secretWord] = randomWord(chosenCategory);
 console.log(newWord);
+
+const startTimer = () => {
+  const start = Date.now();
+
+  setInterval(() => {
+    const seconds = Math.floor((Date.now() - start) / 1000);
+    let minutes = Math.floor(seconds / 60);
+    if (minutes < 10) {
+      minutes = "0" + minutes;
+    }
+    let extraSeconds = seconds % 60;
+    if (extraSeconds < 10) {
+      extraSeconds = "0" + extraSeconds;
+    }
+
+    timer.innerHTML = `${minutes} : ${extraSeconds}`;
+  }, 1000);
+};
+
+startTimer();
