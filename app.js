@@ -3,11 +3,11 @@ import { celebrities, cities, animals, mix } from './words.js';
 const svgField = document.querySelector('svg'),
   svgFigure = Array.from(svgField.children);
 
-const btnPlay = document.querySelector('.btn-play'),
-  btnReset = document.querySelector('.btn-reset'),
+const btnPlay = document.querySelector('btn-play'),
   wordBox = document.querySelector('#secretword'),
   letterBox = document.querySelector('#wrongletters'),
-  guessLetter = document.querySelector('#letterinput');
+  guessLetter = document.querySelector('#letterinput'),
+  timer = document.querySelector('#timer');
 
 let tryCounter = 0,
   newWord,
@@ -32,20 +32,6 @@ guessLetter.addEventListener('keyup', (keyPress) => {
     guessLetter.value = '';
   }
 });
-
-//Funktion för att starta ett nytt spel
-const startGame = () => {
-  btnPlay.textContent = btnPlay.textContent === 'Play' ? 'Reset' : 'Play';
-
-  [newWord, secretWord] = randomWord(chosenCategory);
-  return [newWord, secretWord];
-};
-
-//EventListener för att reagera på startknappen och starta spelet
-btnPlay.addEventListener('click', startGame);
-
-//EventListener för att reagera på resetknappen som kommer upp efter man är färdig
-btnReset.addEventListener('click', startGame);
 
 //Funktion som anropas när rätt format på inputfältet är.
 const newLetter = () => {
@@ -145,5 +131,25 @@ const testLetter = (letter, word, secret) => {
 };
 
 gameReset();
-
+[newWord, secretWord] = randomWord(chosenCategory);
 console.log(newWord);
+
+const startTimer = () => {
+  const start = Date.now();
+
+  setInterval(() => {
+    const seconds = Math.floor((Date.now() - start) / 1000);
+    let minutes = Math.floor(seconds / 60);
+    if (minutes < 10) {
+      minutes = '0' + minutes;
+    }
+    let extraSeconds = seconds % 60;
+    if (extraSeconds < 10) {
+      extraSeconds = '0' + extraSeconds;
+    }
+
+    timer.innerHTML = `${minutes} : ${extraSeconds}`;
+  }, 1000);
+};
+
+startTimer();
