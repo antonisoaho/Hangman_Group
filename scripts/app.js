@@ -221,9 +221,7 @@ const endGame = (gameStatus) => {
       Math.floor(100 - (Date.now() - start) / 10000 - wrongLetters.length * 5) +
       points;
     muteStatus ? '' : winSound.play();
-    statusBox.querySelector(
-      'h1'
-    ).textContent = `Winner winner chicken dinner: ${score} points`;
+    statusBox.querySelector('h1').textContent = `Winner: ${score} points`;
     correctWord.textContent = '';
     correctWord.classList.remove('spinner');
   } else {
