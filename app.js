@@ -164,6 +164,11 @@ const endGame = (gameStatus) => {
   }
 };
 
+//Knapp för att stänga statusfönstret efter en match
+statusBox.querySelector('.btn-close').addEventListener('click', () => {
+  statusBox.classList.add('hidden');
+});
+
 //Funktion som testar bokstav samt matas med vårt secretWord och newWord
 const testLetter = (letter, word, secret) => {
   const positions = [];

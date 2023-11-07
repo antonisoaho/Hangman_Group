@@ -98,6 +98,10 @@ svg {
   gap: 10px;
 }
 
+.container.status {
+  flex-direction: column;
+}
+
 .btn-close {
   position: absolute;
   top: 15px;
