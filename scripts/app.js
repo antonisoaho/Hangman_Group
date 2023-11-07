@@ -5,6 +5,7 @@ import {
   citySound,
   deathSound,
   startSound,
+  winSound,
 } from './sounds.js';
 
 const svgField = document.querySelector('svg'),
@@ -211,6 +212,7 @@ const endGame = (gameStatus) => {
     score =
       Math.floor(100 - (Date.now() - start) / 10000 - wrongLetters.length * 5) +
       points;
+    muteStatus ? '' : winSound.play();
     statusBox.querySelector(
       'h1'
     ).textContent = `You won mothafucka, gained: ${score} points`;

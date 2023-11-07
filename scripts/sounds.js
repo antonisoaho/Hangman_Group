@@ -3,3 +3,4 @@ export const celebSound = new Audio('../sounds/celebrities.wav');
 export const citySound = new Audio('../sounds/citysound.wav');
 export const deathSound = new Audio('../sounds/deathscream.wav');
 export const startSound = new Audio('../sounds/gameStartSound.mp3');
+export const winSound = new Audio('../sounds/win.wav');
