@@ -51,6 +51,7 @@ btnPlay.addEventListener('click', () => {
   [newWord, secretWord] = randomWord(chosenCategory);
   multimode = false;
   startTimer();
+  guessLetter.focus();
 });
 
 //EventListener för att resetta spelet efter att man spelat klart
@@ -59,13 +60,14 @@ btnReset.addEventListener('click', () => {
   startTimer();
   if (!multimode) {
     [newWord, secretWord] = randomWord(chosenCategory);
-  statusBox.classList.add('hidden');
-  } else if (multimode){
+    statusBox.classList.add('hidden');
+    guessLetter.focus();
+  } else if (multimode) {
     multiplayer.classList.remove('hidden');
     statusBox.classList.add('hidden');
-    multiplayerWord();
+
+    multipInput.focus();
   }
-  
 });
 
 //EventListener för att få välja kategorier
@@ -73,22 +75,32 @@ btnCategory.addEventListener('click', () => {
   categoryCont.classList.remove('hidden');
 });
 
+//EventListener för att starta multiplayermode
 btnMultiplayer.addEventListener('click', () => {
   multiplayer.classList.remove('hidden');
-  multiplayerWord();
-});
 
+  multipInput.focus();
+});
+//EventListener för att stänga ner om man ångrat sig
 multiplayer.querySelector('.btn-close').addEventListener('click', () => {
   multiplayer.classList.add('hidden');
 });
 
+//Funktion för att ta user-input på ordet
 const multiplayerWord = () => {
-  const multipInput = document.getElementById('multiplayerword');
   const multiplayerSecretWord = multipInput.value.toUpperCase();
+  multipInput.value = '';
   [newWord, secretWord] = randomWord([multiplayerSecretWord]);
+  guessLetter.focus();
 };
 
+//EventListener för att titta så att användaren har skrivit klart
 multipInput.addEventListener('keyup', (keyPress) => {
+  //För att kontrollera så att man inte skriver i en siffra
+  const value = multipInput.value;
+  const newValue = value.replace(/\d/g, '');
+  multipInput.value = newValue;
+
   if (keyPress.key === 'Enter') {
     multiplayer.classList.add('hidden');
     multimode = true;
