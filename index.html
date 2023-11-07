@@ -4,10 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hang man level up</title>
+    <link rel="icon" href="./icons/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <section class="game">
+      <img
+        src="./icons/volume-high-solid.svg"
+        alt="highsolid"
+        class="btn-sound btn-on"
+        id="sound"
+      />
+      <img
+        src="./icons/volume-xmark-solid.svg"
+        alt="highsolid"
+        class="btn-sound btn-off hidden"
+        id="mute"
+      />
+
       <header class="game__header">
         <h1>Hang man</h1>
         <h2 id="timer"></h2>
@@ -101,6 +115,6 @@
         <button class="btn btn-reset">Play again</button>
       </article>
     </section>
-    <script type="module" src="./app.js"></script>
+    <script type="module" src="./scripts/app.js"></script>
   </body>
 </html>

@@ -31,6 +31,7 @@ svg {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  position: relative;
 }
 
 .game header {
@@ -150,7 +151,17 @@ textarea {
   overflow-y: hidden;
   cursor: default;
 }
-
+.btn-sound {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  width: 30px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+.btn-sound:hover {
+  scale: 1.05;
+}
 .hidden {
   display: none;
 }
