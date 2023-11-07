@@ -11,7 +11,9 @@ const btnPlay = document.querySelector('.btn-play'),
   letterBox = document.querySelector('#wrongletters'),
   guessLetter = document.querySelector('#letterinput'),
   timer = document.querySelector('#timer'),
-  categoryCont = document.querySelector('.category');
+  categoryCont = document.querySelector('.category'),
+  multiplayer = document.querySelector('.multiplayer'),
+  btnMultiplayer = document.querySelector('.btn-multiplayer');
 
 let tryCounter = 0,
   newWord,
@@ -59,7 +61,28 @@ btnReset.addEventListener('click', () => {
 //EventListener för att få välja kategorier
 btnCategory.addEventListener('click', () => {
   categoryCont.classList.remove('hidden');
+  
 });
+
+btnMultiplayer.addEventListener('click', () => {
+  multiplayer.classList.remove('hidden');
+  multiplayerWord()
+});
+
+function multiplayerWord() {
+  const inputField = document.getElementById('multiplayerword');
+  const multiplayerSecretWord = inputField.value.toUpperCase();
+ [newWord, secretWord] = randomWord([multiplayerSecretWord]);
+}
+
+const inputField = document.getElementById('multiplayerword');
+inputField.addEventListener('keyup', (keyPress) => {
+  if (keyPress.key === 'Enter') {
+    multiplayer.classList.add('hidden');
+    multiplayerWord();
+  }
+});
+
 
 categoryCont.querySelectorAll('button').forEach((btn) => {
   btn.addEventListener('click', () => {
@@ -76,6 +99,7 @@ categoryCont.querySelectorAll('button').forEach((btn) => {
     return chosenCategory;
   });
 });
+
 
 //Funktion som anropas när rätt format på inputfältet är.
 const newLetter = () => {
