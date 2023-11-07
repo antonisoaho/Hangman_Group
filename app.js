@@ -69,6 +69,10 @@ btnMultiplayer.addEventListener('click', () => {
   multiplayerWord();
 });
 
+multiplayer.querySelector('.btn-close').addEventListener('click', () => {
+  multiplayer.classList.add('hidden');
+});
+
 const multiplayerWord = () => {
   const multipInput = document.getElementById('multiplayerword');
   const multiplayerSecretWord = multipInput.value.toUpperCase();
