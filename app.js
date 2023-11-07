@@ -79,13 +79,6 @@ multipInput.addEventListener('keyup', (keyPress) => {
   if (keyPress.key === 'Enter') {
     multiplayer.classList.add('hidden');
     multiplayerWord();
-  }
-});
-
-multipInput.addEventListener('keyup', (keyPress) => {
-  if (keyPress.key === 'Enter') {
-    multiplayer.classList.add('hidden');
-    multiplayerWord();
     startTimer();
   }
 });
