@@ -1,6 +1,18 @@
-export const animalSound = new Audio('../sounds/elephant.wav');
-export const celebSound = new Audio('../sounds/celebrities.wav');
-export const citySound = new Audio('../sounds/citysound.wav');
-export const deathSound = new Audio('../sounds/deathscream.wav');
-export const startSound = new Audio('../sounds/gameStartSound.mp3');
-export const winSound = new Audio('../sounds/win.wav');
+export const animalSound = new Audio(
+  'https://github.com/antonisoaho/Hangman_Group/blob/main/sounds/elephant.wav?raw=true'
+);
+export const celebSound = new Audio(
+  'https://github.com/antonisoaho/Hangman_Group/blob/main/sounds/celebrities.wav?raw=true'
+);
+export const citySound = new Audio(
+  'https://github.com/antonisoaho/Hangman_Group/blob/main/sounds/citysound.wav?raw=true'
+);
+export const deathSound = new Audio(
+  'https://github.com/antonisoaho/Hangman_Group/blob/main/sounds/deathscream.wav?raw=true'
+);
+export const startSound = new Audio(
+  'https://github.com/antonisoaho/Hangman_Group/blob/main/sounds/gameStartSound.mp3?raw=true'
+);
+export const winSound = new Audio(
+  'https://github.com/antonisoaho/Hangman_Group/blob/main/sounds/win.wav?raw=true'
+);
