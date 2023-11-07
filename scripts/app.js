@@ -1,4 +1,11 @@
 import { celebrities, cities, animals, mix } from './words.js';
+import {
+  animalSound,
+  celebSound,
+  citySound,
+  deathSound,
+  startSound,
+} from './sounds.js';
 
 const svgField = document.querySelector('svg'),
   svgFigure = Array.from(svgField.children);
@@ -31,11 +38,11 @@ let tryCounter = 0,
 
 let muteStatus = false;
 
-const animalSound = new Audio('../sounds/elephant.wav');
-const celebSound = new Audio('../sounds/celebrities.wav');
-const citySound = new Audio('../sounds/citysound.wav');
-const deathSound = new Audio('../sounds/deathscream.wav');
-const startSound = new Audio('../sounds/gameStartSound.mp3');
+// const animalSound = new Audio('../sounds/elephant.wav');
+// const celebSound = new Audio('../sounds/celebrities.wav');
+// const citySound = new Audio('../sounds/citysound.wav');
+// const deathSound = new Audio('../sounds/deathscream.wav');
+// const startSound = new Audio('../sounds/gameStartSound.mp3');
 
 //EventListener för att se om man vill ha avstängt ljud
 muteBtns.forEach((btn) => {
