@@ -54,6 +54,16 @@ const swapMute = (bool) => {
   return muteStatus;
 };
 
+//EventListener för att starta spelet
+btnPlay.addEventListener('click', () => {
+  gameReset();
+  btnPlay.textContent = 'Reset';
+  [newWord, secretWord] = randomWord(chosenCategory);
+  multimode = false;
+  startTimer();
+  guessLetter.focus();
+});
+
 // EventListener för att titta vad användare har gissat på för bokstav
 guessLetter.addEventListener('keyup', (keyPress) => {
   if (isNaN(guessLetter.value)) {
@@ -70,16 +80,6 @@ guessLetter.addEventListener('keyup', (keyPress) => {
   }
 });
 
-//EventListener för att starta spelet
-btnPlay.addEventListener('click', () => {
-  gameReset();
-  btnPlay.textContent = 'Reset';
-  [newWord, secretWord] = randomWord(chosenCategory);
-  multimode = false;
-  startTimer();
-  guessLetter.focus();
-});
-
 //EventListener för att resetta spelet efter att man spelat klart
 btnReset.addEventListener('click', () => {
   gameReset();
@@ -91,7 +91,6 @@ btnReset.addEventListener('click', () => {
   } else if (multimode) {
     multiplayer.classList.remove('hidden');
     statusBox.classList.add('hidden');
-
     multipInput.focus();
   }
 });
@@ -104,9 +103,9 @@ btnCategory.addEventListener('click', () => {
 //EventListener för att starta multiplayermode
 btnMultiplayer.addEventListener('click', () => {
   multiplayer.classList.remove('hidden');
-
   multipInput.focus();
 });
+
 //EventListener för att stänga ner om man ångrat sig
 multiplayer.querySelector('.btn-close').addEventListener('click', () => {
   multiplayer.classList.add('hidden');
@@ -136,7 +135,7 @@ multipInput.addEventListener('keyup', (keyPress) => {
   }
 });
 
-//EventListener för att veta vilken knapp vi ska klicka på
+//EventListener för att veta vilken kategori det klickats på
 categoryCont.querySelectorAll('button').forEach((btn) => {
   btn.addEventListener('click', () => {
     if (btn.id === 'cities') {
@@ -158,7 +157,7 @@ categoryCont.querySelectorAll('button').forEach((btn) => {
   });
 });
 
-//Funktion som anropas när rätt format på inputfältet är.
+//Funktion som anropas för att göra om gissad bokstav till upperCase och återställa fältet
 const newLetter = () => {
   testLetter(guessLetter.value.toUpperCase(), newWord, secretWord);
   guessLetter.value = '';
@@ -208,6 +207,7 @@ const randomWord = (words) => {
 //Funktion som visar en box som berättar status och frågar om man vill spela igen
 const endGame = (gameStatus) => {
   statusBox.classList.remove('hidden');
+  const correctWord = statusBox.querySelector('.correctword');
   if (gameStatus) {
     score =
       Math.floor(100 - (Date.now() - start) / 10000 - wrongLetters.length * 5) +
@@ -215,23 +215,23 @@ const endGame = (gameStatus) => {
     muteStatus ? '' : winSound.play();
     statusBox.querySelector(
       'h1'
-    ).textContent = `You won mothafucka, gained: ${score} points`;
-    statusBox.querySelector('.correctword').textContent = '';
-    statusBox.querySelector('.correctword').classList.remove('spinner');
+    ).textContent = `Winner winner chicken dinner: ${score} points`;
+    correctWord.textContent = '';
+    correctWord.classList.remove('spinner');
   } else {
     muteStatus ? '' : deathSound.play();
     statusBox.querySelector(
       'h1'
-    ).textContent = `You lose sucka, gained: ${points} points`;
+    ).textContent = `You lose, gained: ${points} points`;
     statusBox.querySelector(
       '.correctword'
     ).textContent = `Correct word: ${newWord}`;
-    statusBox.querySelector('.correctword').classList.add('spinner');
+    correctWord.classList.add('spinner');
     stopTimer();
   }
 };
 
-//Knapp för att stänga statusfönstret efter en match
+//EventListener för att stänga statusfönstret efter en match
 statusBox.querySelector('.btn-close').addEventListener('click', () => {
   statusBox.classList.add('hidden');
 });
@@ -281,8 +281,6 @@ const testLetter = (letter, word, secret) => {
   }
 };
 
-gameReset();
-
 //Timer för att kunna räkna ut bonuspoäng
 const startTimer = () => {
   stopTimer();
@@ -305,3 +303,5 @@ const startTimer = () => {
 
   return gameTimer;
 };
+
+gameReset();
