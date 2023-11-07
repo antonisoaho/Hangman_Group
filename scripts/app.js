@@ -38,12 +38,6 @@ let tryCounter = 0,
 
 let muteStatus = false;
 
-// const animalSound = new Audio('../sounds/elephant.wav');
-// const celebSound = new Audio('../sounds/celebrities.wav');
-// const citySound = new Audio('../sounds/citysound.wav');
-// const deathSound = new Audio('../sounds/deathscream.wav');
-// const startSound = new Audio('../sounds/gameStartSound.mp3');
-
 //EventListener för att se om man vill ha avstängt ljud
 muteBtns.forEach((btn) => {
   btn.addEventListener('click', () => {
@@ -88,7 +82,7 @@ btnPlay.addEventListener('click', () => {
 //EventListener för att resetta spelet efter att man spelat klart
 btnReset.addEventListener('click', () => {
   gameReset();
-  startTimer();
+  multimode ? '' : startTimer();
   if (!multimode) {
     [newWord, secretWord] = randomWord(chosenCategory);
     statusBox.classList.add('hidden');
@@ -115,6 +109,7 @@ btnMultiplayer.addEventListener('click', () => {
 //EventListener för att stänga ner om man ångrat sig
 multiplayer.querySelector('.btn-close').addEventListener('click', () => {
   multiplayer.classList.add('hidden');
+  gameReset();
 });
 
 //Funktion för att ta user-input på ordet
@@ -155,6 +150,7 @@ categoryCont.querySelectorAll('button').forEach((btn) => {
     } else if (btn.id === 'mix') {
       chosenCategory = mix;
     }
+    btnPlay.textContent = 'Play';
     gameReset();
     categoryCont.classList.add('hidden');
     return chosenCategory;
