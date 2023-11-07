@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
 
+@keyframes spin {
+  0% {
+    scale: 0.1;
+    transform: rotate(0deg);
+  }
+  100% {
+    scale: 1;
+    transform: rotate(720deg);
+  }
+}
+
 * {
   font-family: 'Poppins', sans-serif;
   margin: 0;
@@ -162,6 +173,11 @@ textarea {
 .btn-sound:hover {
   scale: 1.05;
 }
+
+.spinner {
+  animation: spin 1.2s linear;
+}
+
 .hidden {
   display: none;
 }

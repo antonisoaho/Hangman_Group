@@ -34,6 +34,8 @@ let muteStatus = false;
 const animalSound = new Audio('../sounds/elephant.wav');
 const celebSound = new Audio('../sounds/celebrities.wav');
 const citySound = new Audio('../sounds/citysound.wav');
+const deathSound = new Audio('../sounds/deathscream.wav');
+const startSound = new Audio('../sounds/gameStartSound.mp3');
 
 //EventListener för att se om man vill ha avstängt ljud
 muteBtns.forEach((btn) => {
@@ -209,10 +211,17 @@ const endGame = (gameStatus) => {
     statusBox.querySelector(
       'h1'
     ).textContent = `You won mothafucka, gained: ${score} points`;
+    statusBox.querySelector('.correctword').textContent = '';
+    statusBox.querySelector('.correctword').classList.remove('spinner');
   } else {
+    muteStatus ? '' : deathSound.play();
     statusBox.querySelector(
       'h1'
     ).textContent = `You lose sucka, gained: ${points} points`;
+    statusBox.querySelector(
+      '.correctword'
+    ).textContent = `Correct word: ${newWord}`;
+    statusBox.querySelector('.correctword').classList.add('spinner');
     stopTimer();
   }
 };
@@ -272,6 +281,7 @@ gameReset();
 //Timer för att kunna räkna ut bonuspoäng
 const startTimer = () => {
   stopTimer();
+  muteStatus ? '' : startSound.play();
   const start = Date.now();
 
   gameTimer = setInterval(() => {
@@ -287,5 +297,6 @@ const startTimer = () => {
 
     timer.innerHTML = `${minutes} : ${extraSeconds}`;
   }, 1000);
+
   return gameTimer;
 };
