@@ -37,6 +37,9 @@ let tryCounter = 0,
   multimode = false,
   start = Date.now();
 
+const pattern = /[^a-zA-ZåäöÅÄÖ]/g;
+const wsPattern = /[^a-zA-ZåäöÅÄÖ ]/g;
+
 let muteStatus = false;
 
 //EventListener för att se om man vill ha avstängt ljud
@@ -66,6 +69,9 @@ btnPlay.addEventListener('click', () => {
 
 // EventListener för att titta vad användare har gissat på för bokstav
 guessLetter.addEventListener('keyup', (keyPress) => {
+  const replacedValue = guessLetter.value;
+  guessLetter.value = replacedValue.replace(pattern, '');
+
   if (isNaN(guessLetter.value)) {
     if (!guessedLetters.includes(guessLetter.value.toUpperCase())) {
       guessLetter.style.color = 'green';
@@ -115,6 +121,7 @@ multiplayer.querySelector('.btn-close').addEventListener('click', () => {
 //Funktion för att ta user-input på ordet
 const multiplayerWord = () => {
   const multiplayerSecretWord = multipInput.value.toUpperCase();
+
   multipInput.value = '';
   [newWord, secretWord] = randomWord([multiplayerSecretWord]);
   guessLetter.focus();
@@ -123,8 +130,9 @@ const multiplayerWord = () => {
 //EventListener för att titta så att användaren har skrivit klart
 multipInput.addEventListener('keyup', (keyPress) => {
   //För att kontrollera så att man inte skriver i en siffra
-  const value = multipInput.value;
-  const newValue = value.replace(/\d/g, '');
+  let value = multipInput.value;
+  const newValue = value.replace(wsPattern, '');
+  // value = newValue.replace(symPattern, '');
   multipInput.value = newValue;
 
   if (keyPress.key === 'Enter') {
