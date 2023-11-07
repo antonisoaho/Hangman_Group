@@ -25,6 +25,7 @@ let tryCounter = 0,
   points = 0,
   chosenCategory = mix,
   gameTimer,
+  multimode = false,
   start = Date.now();
 
 // EventListener för att titta vad användare har gissat på för bokstav
@@ -48,6 +49,7 @@ btnPlay.addEventListener('click', () => {
   gameReset();
   btnPlay.textContent = 'Reset';
   [newWord, secretWord] = randomWord(chosenCategory);
+  multimode = false;
   startTimer();
 });
 
@@ -55,8 +57,15 @@ btnPlay.addEventListener('click', () => {
 btnReset.addEventListener('click', () => {
   gameReset();
   startTimer();
-  [newWord, secretWord] = randomWord(chosenCategory);
+  if (!multimode) {
+    [newWord, secretWord] = randomWord(chosenCategory);
   statusBox.classList.add('hidden');
+  } else if (multimode){
+    multiplayer.classList.remove('hidden');
+    statusBox.classList.add('hidden');
+    multiplayerWord();
+  }
+  
 });
 
 //EventListener för att få välja kategorier
@@ -82,6 +91,7 @@ const multiplayerWord = () => {
 multipInput.addEventListener('keyup', (keyPress) => {
   if (keyPress.key === 'Enter') {
     multiplayer.classList.add('hidden');
+    multimode = true;
     multiplayerWord();
     startTimer();
   }
