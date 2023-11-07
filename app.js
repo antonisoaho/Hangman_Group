@@ -61,6 +61,7 @@ btnCategory.addEventListener('click', () => {
   categoryCont.classList.remove('hidden');
 });
 
+//EventListener för att veta vilken knapp vi ska klicka på
 categoryCont.querySelectorAll('button').forEach((btn) => {
   btn.addEventListener('click', () => {
     if (btn.id === 'cities') {
