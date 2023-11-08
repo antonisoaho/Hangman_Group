@@ -215,6 +215,7 @@ const randomWord = (words) => {
 //Funktion som visar en box som berättar status och frågar om man vill spela igen
 const endGame = (gameStatus) => {
   statusBox.classList.remove('hidden');
+  stopTimer();
   const correctWord = statusBox.querySelector('.correctword');
   if (gameStatus) {
     score =
@@ -233,7 +234,6 @@ const endGame = (gameStatus) => {
       '.correctword'
     ).textContent = `Correct word: ${newWord}`;
     correctWord.classList.add('spinner');
-    stopTimer();
   }
 };
 
